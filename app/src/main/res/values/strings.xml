@@ -125,4 +125,5 @@
 
     <string name="trying_to_connect">Trying to connect to %s</string>
     <string name="failed_connection">Connection failed to %s</string>
+    <string name="incall_switch">Stop reconnects during voice call</string>
 </resources>

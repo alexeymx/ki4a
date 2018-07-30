@@ -212,6 +212,18 @@ public class ki4aService extends Service {
             while( current_status != Util.STATUS_DISCONNECT && (current_fail_attempt <
                         (first_connect ? MAX_FAIL_ATTEMPTS_FOR_NEW:MAX_FAIL_ATTEMPTS_FOR_RECONNECT)) ) {
 
+                    TelephonyManager tel = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+                    if (tel.getCallState() > 0) {
+                        if (preferences.getBoolean("incall_switch", true)) {
+                            Log.e("Call","We are on call");
+                            break;
+                        }
+
+                    }
+
+
+
+
                     for (String server : servers) {
 
                     //We didn't receive the pass

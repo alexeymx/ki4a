@@ -14,7 +14,9 @@ import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -348,6 +350,7 @@ public class MainActivity extends AppCompatActivity {
     public class CheckAvailability extends AsyncTask<Void, List<EndpointItem>, String> {
         public List<EndpointItem> n_e;
         public String mip_address = "0.0.0.0";
+        public String mnc = "";
 
 
         CheckAvailability(List<EndpointItem> it) {
@@ -402,6 +405,17 @@ public class MainActivity extends AppCompatActivity {
                         this.mip_address = "0.0.0.0";
                     }
 
+                    TelephonyManager tel = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+                    String networkOperator = tel.getNetworkOperator();
+                    String simOperator = tel.getSimOperator();
+                    if (!TextUtils.isEmpty(networkOperator)) {
+                        this.mnc = networkOperator+"/"+simOperator;
+                    }
+
+                    String nettype = Util.getNetworkTypeReflection(tel, "getDataNetworkType", 1, false);
+                    Log.d("Nettype",nettype);
+
+
 
                     publishProgress(this.n_e);
                     Thread.sleep(15000);
@@ -429,7 +443,10 @@ public class MainActivity extends AppCompatActivity {
 
             customAdapter.notifyDataSetChanged();
             TextView ipView = (TextView)findViewById(R.id.ipViewTv);
+            TextView mncView = (TextView)findViewById(R.id.mnc);
             ipView.setText(this.mip_address);
+            mncView.setText(this.mnc);
+
 
         }
 

@@ -150,6 +150,13 @@
 
     <SwitchPreference
         android:defaultValue="true"
+        android:key="incall_switch"
+        android:title="@string/incall_switch" />
+
+
+
+    <SwitchPreference
+        android:defaultValue="true"
         android:key="notification_switch"
         android:title="@string/pref_title_notifications" />
 

@@ -25,7 +25,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/list"
+        android:layout_marginTop="5dp"
+        android:background="@color/wallet_highlighted_text_holo_dark"
+        android:text="TextView"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/mnc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/ipViewTv"
         android:layout_centerHorizontal="true"
+        android:layout_below="@+id/list"
+android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:background="@color/wallet_highlighted_text_holo_dark"
         android:text="TextView"

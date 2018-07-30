@@ -523,4 +523,52 @@ public class Util {
         } catch (Exception ignored) { } // for now eat exceptions
         return "";
     }
+
+    public static String getNetworkTypeReflection(final TelephonyManager telephony, final String predictedMethodName, final int slotID, final boolean isPrivate) {
+
+        String result = null;
+
+        try {
+
+            final Class<?> telephonyClass = Class.forName(telephony.getClass().getName());
+
+            final Class<?>[] parameter = new Class[1];
+            parameter[0] = int.class;
+            final Method getSubtecnology;
+            if (slotID != -1) {
+                if (isPrivate) {
+                    getSubtecnology = telephonyClass.getDeclaredMethod(predictedMethodName, parameter);
+                } else {
+                    getSubtecnology = telephonyClass.getMethod(predictedMethodName, parameter);
+                }
+            } else {
+                if (isPrivate) {
+                    getSubtecnology = telephonyClass.getDeclaredMethod(predictedMethodName);
+                } else {
+                    getSubtecnology = telephonyClass.getMethod(predictedMethodName);
+                }
+            }
+
+            final Object obPhone;
+            final Object[] obParameter = new Object[1];
+            obParameter[0] = slotID;
+            if (getSubtecnology != null) {
+                if (slotID != -1) {
+                    obPhone = getSubtecnology.invoke(telephony, obParameter);
+                } else {
+                    obPhone = getSubtecnology.invoke(telephony);
+                }
+
+                if (obPhone != null) {
+                    result = obPhone.toString();
+
+                }
+            }
+        } catch (Exception e) {
+            //e.printStackTrace();
+            return null;
+        }
+        return result;
+    }
+
 }
